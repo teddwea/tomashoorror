@@ -175,8 +175,9 @@ git commit -m "Add mods"
 git push
 ```
 
-4. Redeploy in Dokploy (or let the auto-deploy workflow do it). `mods/` is
-   bind-mounted to `/server/mods`, so new jars load on next start.
+4. Push triggers a Dokploy redeploy automatically (GitHub App integration).
+   Dokploy rebuilds the image, which copies `mods/` to `/server/mods`, so the
+   new jars are loaded on the next start.
 
 Tips:
 
@@ -187,15 +188,22 @@ Tips:
 
 ---
 
-## 6. Auto-deploy on push (optional)
+## 6. Auto-deploy on push
 
-`.github/workflows/deploy.yml` validates the compose file and triggers a
-Dokploy deployment on every push to `main`.
+If you connected the repo through Dokploy's **GitHub App** (step 4), Dokploy
+**already auto-deploys** on every push to the selected branch — nothing else to
+do.
+
+`.github/workflows/deploy.yml` is an optional alternative for when you did
+**not** use the GitHub App. It validates the compose file and calls a Dokploy
+deploy webhook:
 
 1. Dokploy → your Compose service → **Webhooks** → copy the deploy webhook URL.
 2. GitHub → **Settings → Secrets and variables → Actions** → new secret named
    `DOKPLOY_WEBHOOK_URL` with that URL.
 3. Push to `main`.
+
+> Don't enable both, or you'll trigger two deployments per push.
 
 ---
 

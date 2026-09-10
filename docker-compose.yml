@@ -36,3 +36,4 @@ services:
 volumes:
   minecraft-world:
   minecraft-logs:
+  minecraft-config:
