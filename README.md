@@ -68,6 +68,29 @@ in git. Edit that file, commit, redeploy.
 
 ---
 
+## Recommended settings for 2 players + horror mods
+
+Already applied in this repo:
+
+| Setting (`server/server.properties`) | Value | Why                                   |
+| ------------------------------------ | ----- | ------------------------------------- |
+| `max-players`                        | `2`   | Only you two                          |
+| `view-distance`                      | `6`   | Bigger view = much more RAM/CPU       |
+| `simulation-distance`                | `4`   | Only nearby chunks are ticked         |
+| `entity-broadcast-range-percentage`  | `75`  | Less mob packet spam                  |
+| `pause-when-empty-seconds`           | `60`  | Server freezes when empty, saves CPU  |
+| `difficulty`                         | `normal` | Set `hard` for a meaner experience |
+| `spawn-protection`                   | `0`   | No useless spawn claim                |
+
+Memory defaults to `MEMORY=2G` / `INIT_MEMORY=512M` (in `.env.example`), which
+is plenty for 2 players. Keep `MEMORY` ≤ ~70% of the VPS RAM.
+
+Horror mods are usually **required on both client and server** — check each
+mod's page for its "client/server side". Put server-side `.jar`s in `mods/`, and
+have both players install the same client-required mods.
+
+---
+
 ## 2. Run locally (optional)
 
 ### With Docker (recommended)

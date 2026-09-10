@@ -13,8 +13,8 @@ services:
       # By using this stack you agree to the Minecraft EULA:
       # https://aka.ms/MinecraftEULA
       EULA: "${EULA:-TRUE}"
-      MEMORY: "${MEMORY:-4G}"
-      INIT_MEMORY: "${INIT_MEMORY:-1G}"
+      MEMORY: "${MEMORY:-2G}"
+      INIT_MEMORY: "${INIT_MEMORY:-512M}"
       RCON_PASSWORD: "${RCON_PASSWORD:-}"
       TZ: "${TZ:-UTC}"
     volumes:
