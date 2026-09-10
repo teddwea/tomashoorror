@@ -23,6 +23,8 @@ services:
       - minecraft-world:/server/world
       - minecraft-logs:/server/logs
       - minecraft-config:/server/config
+      # Ops, whitelist, bans and player caches survive redeploys here.
+      - minecraft-runtime:/server/runtime
       # NOTE: mods are NOT bind-mounted. They are copied into the image at
       # build time (see Dockerfile), which is what Dokploy needs because it
       # wipes the repo directory on every deploy.
@@ -37,3 +39,4 @@ volumes:
   minecraft-world:
   minecraft-logs:
   minecraft-config:
+  minecraft-runtime:

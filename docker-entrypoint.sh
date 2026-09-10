@@ -27,7 +27,7 @@ if [ -f server.properties ]; then
 fi
 
 # --- Runtime dirs -----------------------------------------------------------
-mkdir -p world logs crash-reports config defaultconfigs mods
+mkdir -p world logs crash-reports config defaultconfigs mods runtime
 
 echo "[entrypoint] Starting NeoForge 21.11.45 for Minecraft 1.21.11 (heap ${INIT_MEMORY}/${MEMORY})"
 

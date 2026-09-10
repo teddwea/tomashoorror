@@ -91,6 +91,33 @@ have both players install the same client-required mods.
 
 ---
 
+## What persists (and what a restart/redeploy does)
+
+| Action | Result |
+| ------ | ------ |
+| **Restart** (Dokploy Restart / `docker compose restart`) | Nothing is wiped — same container, all files kept. |
+| **Redeploy** (git push / `docker compose up --build --force-recreate`) | Container is rebuilt from the image; **named volumes are kept**. |
+| **Delete service / `docker compose down -v` / deleting volumes** | Volumes are removed — this *does* wipe the world. |
+
+Persisted in Docker named volumes (survive redeploys):
+
+| Volume (prefixed with app name) | Container path | Holds |
+| ------------------------------- | -------------- | ----- |
+| `..._minecraft-world`   | `/server/world`   | The world |
+| `..._minecraft-config`  | `/server/config`  | NeoForge + mod configs |
+| `..._minecraft-runtime` | `/server/runtime` | Ops, whitelist, bans, player caches |
+| `..._minecraft-logs`    | `/server/logs`    | Logs |
+
+Everything else (`server.properties`, `eula.txt`, the server jars, mods) comes
+from the repo image and resets to the committed version on redeploy — that is
+intentional so Git stays the source of truth.
+
+**Rule of thumb:** to avoid losing progress, never delete the service or its
+volumes, and use **Redeploy** instead of recreating the stack. Enable Dokploy's
+**Volume Backups** for off-site backups.
+
+---
+
 ## 2. Run locally (optional)
 
 ### With Docker (recommended)
