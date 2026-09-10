@@ -1,0 +1,38 @@
+services:
+  minecraft:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: minecraft-neoforge:1.21.11
+    tty: true
+    stdin_open: true
+    restart: unless-stopped
+    ports:
+      - "${SERVER_PORT:-25565}:25565"
+    environment:
+      # By using this stack you agree to the Minecraft EULA:
+      # https://aka.ms/MinecraftEULA
+      EULA: "${EULA:-TRUE}"
+      MEMORY: "${MEMORY:-4G}"
+      INIT_MEMORY: "${INIT_MEMORY:-1G}"
+      RCON_PASSWORD: "${RCON_PASSWORD:-}"
+      TZ: "${TZ:-UTC}"
+    volumes:
+      # Named volumes persist across redeploys. On first start Docker seeds
+      # each volume from the matching folder baked into the image.
+      - minecraft-world:/server/world
+      - minecraft-logs:/server/logs
+      - minecraft-config:/server/config
+      # NOTE: mods are NOT bind-mounted. They are copied into the image at
+      # build time (see Dockerfile), which is what Dokploy needs because it
+      # wipes the repo directory on every deploy.
+    healthcheck:
+      test: ["CMD-SHELL", "test -f logs/latest.log && grep -q 'Done (' logs/latest.log"]
+      interval: 30s
+      start_period: 5m
+      timeout: 10s
+      retries: 5
+
+volumes:
+  minecraft-world:
+  minecraft-logs:

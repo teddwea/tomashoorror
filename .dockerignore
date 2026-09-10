@@ -1,0 +1,9 @@
+.git
+.github
+.env
+server/world
+server/logs
+server/crash-reports
+server/.cache
+server/*.log
+server/*.log.gz

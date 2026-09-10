@@ -1,0 +1,25 @@
+name: Validate and deploy to Dokploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate docker-compose.yml
+        run: |
+          cp .env.example .env
+          docker compose config -q
+          echo "Compose file is valid."
+
+      - name: Trigger Dokploy deployment
+        if: ${{ secrets.DOKPLOY_WEBHOOK_URL != '' }}
+        run: |
+          curl -fsS -X POST "${{ secrets.DOKPLOY_WEBHOOK_URL }}"
+          echo "Dokploy deployment triggered."

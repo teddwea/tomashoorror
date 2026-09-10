@@ -1,0 +1,10 @@
+# Normalize line endings so shell scripts always stay Linux-compatible,
+# even when the repo is checked out on Windows.
+* text=auto
+*.sh text eol=lf
+*.bat text eol=crlf
+
+# Don't try to diff/merge binaries
+*.jar binary
+*.lzma binary
+*.tsrg binary

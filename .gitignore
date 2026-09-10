@@ -1,0 +1,26 @@
+# Local secrets
+.env
+
+# Server runtime data - generated at runtime, never commit.
+# (The committed server/ install is tracked; only these change on disk.)
+server/world/
+server/logs/
+server/crash-reports/
+server/.cache/
+server/usercache.json
+server/usernamecache.json
+server/*.log
+server/*.log.gz
+
+# NeoForge installer logs
+*.jar.log
+
+# Mod temp/download artifacts
+mods/*.tmp
+mods/*.part
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
